@@ -8,6 +8,13 @@ import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from datetime import datetime, timedelta
+from flask import send_file
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import seaborn as sns
+import io
 
 # ---------------------------------------------------------
 # Init
@@ -91,6 +98,23 @@ def decisions_ml(data):
         "decision_volume_eau": round(pred_volume, 2),
     }
 
+def _gen_irrigation_timeseries(hours=24, step_minutes=15):
+    now = datetime.utcnow()
+    periods = int(hours * 60 / step_minutes)
+    times = pd.date_range(end=now, periods=periods, freq=f"{step_minutes}min")
+    moisture, irr_on, irr_lph = [], [], []
+    level = 60.0
+    for _ in range(periods):
+        on = 1 if level < 45 else 0
+        irr_on.append(on)
+        flow = 2.0 if on else 0.0
+        irr_lph.append(flow)
+        evap = 0.25
+        level = max(20.0, min(95.0, level - evap + (3.0 if on else 0.0)))
+        moisture.append(round(level + random.uniform(-0.8, 0.8), 1))
+    df = pd.DataFrame({"time": times, "moisture": moisture, "irrigation_on": irr_on, "irrigation_lph": irr_lph})
+    return df
+
 # ---------------------------------------------------------
 # Routes
 # ---------------------------------------------------------
@@ -164,6 +188,91 @@ def crop_recommend():
     except Exception as e:
         return jsonify({"erreur": f"Erreur prédiction: {e}"}), 500
 
+@app.get("/api/analytics/irrigation")
+def analytics_irrigation():
+    hours = int(request.args.get("hours", 24))
+    df = _gen_irrigation_timeseries(hours=hours)
+    stats = {
+        "avg_moisture": float(round(df["moisture"].mean(), 2)),
+        "min_moisture": float(df["moisture"].min()),
+        "max_moisture": float(df["moisture"].max()),
+        "irrigation_events": int((df["irrigation_on"].diff().gt(0)).sum()),
+        "total_liters": float(round((df["irrigation_lph"] * (15/60)).sum(), 2)),
+    }
+    return jsonify({
+        "series": [
+            {"t": r.time.isoformat(), "moisture": float(r.moisture), "irrigation_on": int(r.irrigation_on), "irrigation_lph": float(r.irrigation_lph)}
+            for r in df.itertuples(index=False)
+        ],
+        "stats": stats
+    })
+
+@app.get("/api/analytics/irrigation/plot")
+def analytics_irrigation_plot():
+    kind = request.args.get("kind", "moisture")
+    hours = int(request.args.get("hours", 24))
+    df = _gen_irrigation_timeseries(hours=hours)
+
+    sns.set_theme(style="darkgrid", rc={
+        "axes.facecolor": "#0b0b0b",
+        "figure.facecolor": "#0b0b0b",
+        "axes.edgecolor": "#9ca3af",
+        "grid.color": "#1f2937",
+        "text.color": "#ffffff",
+        "axes.labelcolor": "#ffffff",
+        "xtick.color": "#ffffff",
+        "ytick.color": "#ffffff",
+        "legend.edgecolor": "#9ca3af",
+        "axes.titlesize": 16,
+        "axes.labelsize": 14,
+    })
+    fig, ax = plt.subplots(figsize=(12, 4.5), dpi=150)  # taille moyenne
+
+    if kind == "irrigation":
+        ax.step(df["time"], df["irrigation_lph"], where="post", color="#10B981", linewidth=2.0, label="Débit arrosage (L/h)")
+        ax.set_ylabel("L/h")
+    else:
+        ax.axhspan(50, 70, color="#10B981", alpha=0.08, label="Zone optimale (50-70%)")
+        ax.plot(df["time"], df["moisture"], color="#10B981", linewidth=2.0, label="Humidité sol (%)")
+        ax.set_ylabel("%")
+
+    ax.set_xlabel("Temps (UTC)")
+    ax.tick_params(axis="both", labelsize=12)
+    ax.grid(True, alpha=0.25)
+    leg = ax.legend(loc="upper left", framealpha=0.15)
+    for text in leg.get_texts():
+        text.set_color("#ffffff")
+        text.set_fontsize(12)
+
+    plt.tight_layout()
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", facecolor="#0b0b0b", bbox_inches="tight")
+    plt.close(fig)
+    buf.seek(0)
+    return send_file(buf, mimetype="image/png")
+
+@app.post("/api/analytics/simulate")
+def analytics_simulate():
+    p = request.get_json(silent=True) or {}
+    crop = str(p.get("crop", "générique")).lower()
+    soil = str(p.get("soil", "limoneux")).lower()
+    target = float(p.get("target_moisture", 55))
+    soil_factor = {"sableux": 1.3, "limoneux": 1.0, "argileux": 0.8}.get(soil, 1.0)
+    crop_factor = 1.0
+    if crop in ("tomate", "tomato"): crop_factor = 1.15
+    if crop in ("salade", "lettuce"): crop_factor = 0.9
+    if crop in ("piment", "pepper"): crop_factor = 1.1
+    base_minutes = max(5, min(90, (target - 40) * 2.0))
+    minutes_per_day = round(base_minutes * soil_factor * crop_factor, 0)
+    if minutes_per_day <= 20:
+        slots = [{"time": "06:00", "minutes": int(minutes_per_day)}]
+    elif minutes_per_day <= 40:
+        m = int(minutes_per_day // 2)
+        slots = [{"time": "06:00", "minutes": m}, {"time": "18:00", "minutes": int(minutes_per_day - m)}]
+    else:
+        m = int(minutes_per_day // 3)
+        slots = [{"time": "06:00", "minutes": m}, {"time": "12:00", "minutes": m}, {"time": "18:00", "minutes": int(minutes_per_day - 2*m)}]
+    return jsonify({"crop": crop, "soil": soil, "target_moisture": target, "minutes_per_day": int(minutes_per_day), "suggested_slots": slots})
 # ---------------------------------------------------------
 # Run
 # ---------------------------------------------------------
