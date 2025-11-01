@@ -1,4 +1,4 @@
-import { Cpu, Activity, Radar, Bell, BarChart3, LayoutGrid } from "lucide-react";
+import { Cpu, Activity, Radar, Bell, Sprout, LayoutGrid } from "lucide-react";
 
 const features = [
   {
@@ -26,10 +26,10 @@ const features = [
     icon: <Bell size={20} />,
   },
   {
-    text: "Analytics Dashboard",
+    text: "Recommandation Culture (IA)",
     description:
-      "Tableaux de bord pour suivre consommation d’eau, efficacité énergétique, rendements et historiques par parcelle.",
-    icon: <BarChart3 size={20} />,
+      "Recommande la culture adaptée à votre sol via le modèle entraîné, à partir des 7 facteurs (données capteurs ou simulation manuelle).",
+    icon: <Sprout size={20} />,
   },
   {
     text: "Built‑in Templates",
