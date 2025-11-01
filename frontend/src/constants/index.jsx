@@ -1,9 +1,4 @@
-import { BotMessageSquare } from "lucide-react";
-import { BatteryCharging } from "lucide-react";
-import { Fingerprint } from "lucide-react";
-import { ShieldHalf } from "lucide-react";
-import { PlugZap } from "lucide-react";
-import { GlobeLock } from "lucide-react";
+import { Cpu, Activity, Radar, Bell, BarChart3, LayoutGrid } from "lucide-react";
 
 import user1 from "../assets/profile-pictures/user1.jpg";
 import user2 from "../assets/profile-pictures/user2.jpg";
@@ -13,166 +8,163 @@ import user5 from "../assets/profile-pictures/user5.jpg";
 import user6 from "../assets/profile-pictures/user6.jpg";
 
 export const navItems = [
-  { label: "Features", href: "#" },
-  { label: "Workflow", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Testimonials", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "Simulation", href: "/simulation" },
+  { label: "About Us", href: "/about" },
 ];
 
 export const testimonials = [
   {
-    user: "John Doe",
-    company: "Stellar Solutions",
+    user: "Amina B.",
+    company: "Ferme Oasis",
     image: user1,
-    text: "I am extremely satisfied with the services provided. The team was responsive, professional, and delivered results beyond my expectations.",
+    text: "GreenBrain a réduit notre consommation d’eau de 28% tout en stabilisant la production sous serre. Les alertes nous évitent les pics de chaleur.",
   },
   {
-    user: "Jane Smith",
-    company: "Blue Horizon Technologies",
+    user: "Karim M.",
+    company: "AgriSud Serres",
     image: user2,
-    text: "I couldn't be happier with the outcome of our project. The team's creativity and problem-solving skills were instrumental in bringing our vision to life",
+    text: "L’IA planifie l’irrigation selon la météo et le stade de culture. On gagne du temps et on évite le stress hydrique.",
   },
   {
-    user: "David Johnson",
-    company: "Quantum Innovations",
+    user: "Sofia L.",
+    company: "BioGreen Coop",
     image: user3,
-    text: "Working with this company was a pleasure. Their attention to detail and commitment to excellence are commendable. I would highly recommend them to anyone looking for top-notch service.",
+    text: "La prévisualisation en temps réel des décisions (ouvrants, ventilation) nous aide à comprendre et ajuster rapidement.",
   },
   {
-    user: "Ronee Brown",
-    company: "Fusion Dynamics",
+    user: "Hassan T.",
+    company: "Atlas Horticulture",
     image: user4,
-    text: "Working with the team at XYZ Company was a game-changer for our project. Their attention to detail and innovative solutions helped us achieve our goals faster than we thought possible. We are grateful for their expertise and professionalism!",
+    text: "Les templates par culture sont très utiles. Démarrage rapide et paramètres cohérents dès le premier jour.",
   },
   {
-    user: "Michael Wilson",
-    company: "Visionary Creations",
+    user: "Nadia R.",
+    company: "AgroTech Lab",
     image: user5,
-    text: "I am amazed by the level of professionalism and dedication shown by the team. They were able to exceed our expectations and deliver outstanding results.",
+    text: "Le tableau de bord eau/énergie est clair. Nous suivons l’efficacité par parcelle et saison sans effort.",
   },
   {
-    user: "Emily Davis",
-    company: "Synergy Systems",
+    user: "Youssef K.",
+    company: "Serres du Littoral",
     image: user6,
-    text: "The team went above and beyond to ensure our project was a success. Their expertise and dedication are unmatched. I look forward to working with them again in the future.",
+    text: "Super système d’alertes: capteurs défaillants, surchauffe, tout est détecté à temps. Zéro perte cette saison.",
   },
 ];
 
 export const features = [
   {
-    icon: <BotMessageSquare />,
-    text: "Drag-and-Drop Interface",
+    icon: <Cpu size={20} />,
+    text: "AI Integration Système",
     description:
-      "Easily design and arrange your VR environments with a user-friendly drag-and-drop interface.",
+      "Moteur d’IA qui planifie l’irrigation et le climat (ombrage, ouvrants, ventilation) selon la culture, la météo et l’historique.",
   },
   {
-    icon: <Fingerprint />,
-    text: "Multi-Platform Compatibility",
-    description:
-      "Build VR applications that run seamlessly across multiple platforms, including mobile, desktop, and VR headsets.",
-  },
-  {
-    icon: <ShieldHalf />,
-    text: "Built-in Templates",
-    description:
-      "Jumpstart your VR projects with a variety of built-in templates for different types of applications and environments.",
-  },
-  {
-    icon: <BatteryCharging />,
+    icon: <Activity size={20} />,
     text: "Real-Time Preview",
     description:
-      "Preview your VR application in real-time as you make changes, allowing for quick iterations and adjustments.",
+      "Aperçu en temps réel des décisions et états des actionneurs avec mises à jour instantanées.",
   },
   {
-    icon: <PlugZap />,
-    text: "Collaboration Tools",
+    icon: <Radar size={20} />,
+    text: "Multi-capteurs Sources",
     description:
-      "Work together with your team in real-time on VR projects, enabling seamless collaboration and idea sharing.",
+      "Agrégation de capteurs (humidité du sol, température, hygrométrie, rayonnement, vent) + données météo externes.",
   },
   {
-    icon: <GlobeLock />,
+    icon: <Bell size={20} />,
+    text: "Alert Système Intégration",
+    description:
+      "Alertes intelligentes (stress hydrique, surchauffe, pannes capteurs) par e‑mail/SMS pour interventions rapides.",
+  },
+  {
+    icon: <BarChart3 size={20} />,
     text: "Analytics Dashboard",
     description:
-      "Gain valuable insights into user interactions and behavior within your VR applications with an integrated analytics dashboard.",
+      "Suivi de la consommation d’eau, efficacité énergétique, rendements et historiques par parcelle/saison.",
+  },
+  {
+    icon: <LayoutGrid size={20} />,
+    text: "Built‑in Templates",
+    description:
+      "Modèles prêts à l’emploi par type de culture et saison pour un démarrage rapide et des réglages fiables.",
   },
 ];
 
+// Optionnel: autres sections (non utilisées par l’interface actuelle), adaptées au contexte
 export const checklistItems = [
   {
-    title: "Code merge made easy",
-    description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+    title: "Connexion des capteurs",
+    description: "Humidité du sol, température, hygrométrie, rayonnement, vent.",
   },
   {
-    title: "Review code without worry",
-    description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+    title: "Configuration de la culture",
+    description: "Type de culture, stade, sol et objectifs d’irrigation/climat.",
   },
   {
-    title: "AI Assistance to reduce time",
-    description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+    title: "Supervision en temps réel",
+    description: "Décisions IA, états des actionneurs et historique récent.",
   },
   {
-    title: "Share work in minutes",
-    description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+    title: "Rapports & analytics",
+    description: "Consommation d’eau/énergie et rendements par parcelle.",
   },
 ];
 
+// Conservés pour compatibilité si utilisés ailleurs
 export const pricingOptions = [
   {
-    title: "Free",
-    price: "$0",
+    title: "Starter",
+    price: "€0",
     features: [
-      "Private board sharing",
-      "5 Gb Storage",
-      "Web Analytics",
-      "Private Mode",
+      "Simulation en ligne",
+      "1 serre",
+      "Vue basique capteurs",
+      "Alertes e‑mail",
     ],
   },
   {
     title: "Pro",
-    price: "$10",
+    price: "€29",
     features: [
-      "Private board sharing",
-      "10 Gb Storage",
-      "Web Analytics (Advance)",
-      "Private Mode",
+      "Jusqu’à 5 serres",
+      "Templates cultures",
+      "Analytics avancés",
+      "Alertes e‑mail/SMS",
     ],
   },
   {
     title: "Enterprise",
-    price: "$200",
+    price: "Sur devis",
     features: [
-      "Private board sharing",
-      "Unlimited Storage",
-      "High Performance Network",
-      "Private Mode",
+      "Serres illimitées",
+      "Intégration API/SCADA",
+      "SLA et support dédié",
+      "Modèles IA sur mesure",
     ],
   },
 ];
 
 export const resourcesLinks = [
-  { href: "#", text: "Getting Started" },
-  { href: "#", text: "Documentation" },
-  { href: "#", text: "Tutorials" },
-  { href: "#", text: "API Reference" },
-  { href: "#", text: "Community Forums" },
+  { href: "#simulation", text: "Simulation en ligne" },
+  { href: "#home", text: "Guide de démarrage" },
+  { href: "#about", text: "À propos" },
+  { href: "#", text: "API (bientôt)" },
+  { href: "#", text: "Communauté" },
 ];
 
 export const platformLinks = [
-  { href: "#", text: "Features" },
-  { href: "#", text: "Supported Devices" },
-  { href: "#", text: "System Requirements" },
-  { href: "#", text: "Downloads" },
-  { href: "#", text: "Release Notes" },
+  { href: "#home", text: "Fonctionnalités" },
+  { href: "#", text: "Capteurs supportés" },
+  { href: "#", text: "Exigences système" },
+  { href: "#", text: "Téléchargements" },
+  { href: "#", text: "Notes de version" },
 ];
 
 export const communityLinks = [
-  { href: "#", text: "Events" },
+  { href: "#", text: "Événements" },
   { href: "#", text: "Meetups" },
-  { href: "#", text: "Conferences" },
+  { href: "#", text: "Conférences" },
   { href: "#", text: "Hackathons" },
-  { href: "#", text: "Jobs" },
+  { href: "#", text: "Offres d’emploi" },
 ];
