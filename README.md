@@ -13,9 +13,9 @@ GreenBrain est un projet de démonstration full-stack utilisant l'intelligence a
 
 ## 🚀 Vidéo de Démonstration
 
-Cliquez ci-dessous pour voir une démonstration complète de l'application :
+Cliquez ci-dessous pour voir une démonstration complète de l'application (assurez-vous que l'image `frontend/src/assets/demo.jpeg` est dans votre dépôt).
 
-[![Vidéo Démo GreenBrain](https://i.imgur.com/g8cWc0B.png)](https://drive.google.com/file/d/1n_hN8LiSlGXSyY_qwBq9eMoI7znhOY_I/view?usp=drive_link)
+[![Vidéo Démo GreenBrain](./frontend/src/assets/demo.jpeg)](https://drive.google.com/file/d/1n_hN8LiSlGXSyY_qwBq9eMoI7znhOY_I/view?usp=drive_link)
 
 **[Lien direct vers la vidéo de démonstration](https://drive.google.com/file/d/1n_hN8LiSlGXSyY_qwBq9eMoI7znhOY_I/view?usp=drive_link)**
 
