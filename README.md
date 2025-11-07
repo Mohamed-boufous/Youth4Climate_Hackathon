@@ -13,7 +13,7 @@ GreenBrain est un projet de démonstration full-stack utilisant l'intelligence a
 
 ## 🚀 Vidéo de Démonstration
 
-Cliquez ci-dessous pour voir une démonstration complète de l'application (assurez-vous que l'image `frontend/src/assets/demo.jpeg` est dans votre dépôt).
+Cliquez ci-dessous pour voir une démonstration complète de l'application.
 
 [![Vidéo Démo GreenBrain](./frontend/src/assets/demo.jpeg)](https://drive.google.com/file/d/1n_hN8LiSlGXSyY_qwBq9eMoI7znhOY_I/view?usp=drive_link)
 
@@ -160,3 +160,4 @@ Le serveur Flask (`app.py`) expose les routes suivantes :
 * `POST /api/analytics/simulate`:
     * **Body (JSON)**: `{ "crop": str, "soil": str, "target_moisture": float }`
     * **Réponse (JSON)**: `{ "minutes_per_day": int, "suggested_slots": [...] }`
+
